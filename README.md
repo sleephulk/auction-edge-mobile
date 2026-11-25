@@ -7,9 +7,13 @@ Live at https://app.auctionedge.in/pocket/ (sign in with the Auction Edge accoun
 
 - NIFTY and BANKNIFTY, index and front-month future. 1-minute candles from the server; 3m to 1h folded on the phone, anchored at 09:15; 1d and 1w from daily bars.
 - Older history pages in on scroll-left.
-- Live candle and ticker strip from a once-a-second quote poll while the relay runs (09:00 to 15:48 IST).
+- Live candle from a once-a-second quote poll while the relay runs (09:00 to 15:48 IST).
+- One slim header row: the symbol is a picker (tap for the instruments with live prices), then the interval chip, the feed dot and the app menu. The widget's own phone header is hidden in `style.css`.
 - The full openalgo widget: drawings, 113 indicators, chart types (Heikin Ashi, Renko, P&F, Kagi...), alerts, watchlist, saved layouts, drawing templates, fullscreen. Layout and drawings persist on the device (IndexedDB).
-- Market Profile (TPO) and Volume Profile toggles in the app menu (the "..." button). Volume Profile is futures only.
+- Market Profile (TPO) and Volume Profile toggles in the app menu (the "..." button). Volume Profile is futures only. TPO is blue on light grey, VP is amber; colours live in `src/profileStyle.ts`.
+- Drawn profiles from the app menu: fixed-range TPO (our own drawing tool, `src/fixedTpo.ts`), fixed-range Volume Profile and anchored VWAP (openalgo tools, futures only).
+- Reset chart view: the round button on the chart, the app menu, or a double-tap on the price axis. Drag the chart up or down to scroll vertically; drag the price axis to stretch it.
+- Previous close (dashed line and axis tag), day high and low (axis tags); a bar countdown in the last-price tag while the feed is live.
 
 ## Layout
 

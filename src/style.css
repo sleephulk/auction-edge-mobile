@@ -40,37 +40,62 @@ html, body {
   border-bottom: 1px solid var(--line);
   background: var(--bg-raised);
 }
-.ticks {
+.pick {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.ticks::-webkit-scrollbar { display: none; }
-
-.tick {
-  flex: 0 0 auto;
-  min-width: 108px;
-  padding: 4px 10px;
+  align-items: baseline;
+  gap: 8px;
+  padding: 0 12px;
   border: 0;
-  border-right: 1px solid var(--line);
   background: transparent;
   color: inherit;
   font: inherit;
   text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
   cursor: pointer;
 }
-.tick[aria-pressed='true'] { background: rgba(94, 106, 210, 0.16); box-shadow: inset 0 -2px 0 var(--accent); }
-.tick .sym { font-size: 10px; letter-spacing: 0.04em; color: var(--muted); white-space: nowrap; }
-.tick .row { display: flex; align-items: baseline; gap: 6px; white-space: nowrap; }
-.tick .ltp { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.tick .chg { font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); }
-.tick .chg.up { color: var(--up); }
-.tick .chg.down { color: var(--down); }
+.pick .sym { font-size: 15px; font-weight: 650; letter-spacing: 0.01em; }
+.pick .caret { font-size: 13px; color: var(--muted); margin-left: -5px; }
+.pick .ltp { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pick .chg, .pickrow .chg { font-size: 11.5px; font-variant-numeric: tabular-nums; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+.chg.up { color: var(--up); }
+.chg.down { color: var(--down); }
+
+.ivbtn {
+  flex: 0 0 auto;
+  align-self: center;
+  height: 28px;
+  min-width: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font: 600 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+/* Instrument picker rows and the interval grid, inside the bottom sheet. */
+.sheet .pickrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.sheet .pickrow[aria-pressed='true'] { background: rgba(94, 106, 210, 0.14); }
+.pickrow .name { display: flex; flex-direction: column; align-items: flex-start; }
+.pickrow .name small { font-size: 11px; color: var(--muted); }
+.pickrow .price { display: flex; flex-direction: column; align-items: flex-end; }
+.pickrow .ltp { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ivgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 4px 4px 8px; }
+.sheet .ivchip {
+  justify-content: center;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-weight: 600;
+}
+.sheet .ivchip[aria-pressed='true'] { border-color: var(--accent); background: rgba(94, 106, 210, 0.18); }
+
+/* The widget's own phone header (symbol box + interval) is replaced by .strip. */
+.oac-widget.is-mobile .oac-mobile__header { display: none; }
 
 .status {
   flex: 0 0 auto;
@@ -159,3 +184,25 @@ html, body {
 }
 .sheet button:active { background: rgba(255, 255, 255, 0.06); }
 .sheet button small { color: var(--muted); font-size: 12px; }
+
+/* ---- on-chart controls ------------------------------------------------- */
+.fab {
+  position: absolute;
+  right: 80px;
+  bottom: 86px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(10, 10, 12, 0.82);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.fab:active { color: var(--text); background: rgba(94, 106, 210, 0.3); }
+
+/* The widget's phone toolbar: keep every label on one line at 360-412 px. */
+.oac-mobile__action { white-space: nowrap; font-size: 11.5px; letter-spacing: -0.01em; }
+

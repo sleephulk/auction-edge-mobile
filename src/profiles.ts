@@ -9,11 +9,46 @@ import {
 import type { Widget } from 'openalgo-charts/widget';
 import { findInstrument } from './instruments';
 import { parseInterval } from './timeframes';
+import { TPO_COLORS as STYLE, VP_COLORS } from './profileStyle';
 
 // Market Profile (TPO) and Volume Profile over the bars the chart already
 // holds. Both are per-session, 70% value area, India hours. Recomputed when the
 // instrument, the interval or the data changes (at most every few seconds while
 // the live bar ticks).
+
+const TPO_STYLE = {
+  colorMode: 'valueArea',
+  vaColor: STYLE.va,
+  color: STYLE.outside,
+  outsideVaOpacity: 0.55,
+  pocColor: STYLE.poc,
+  vahColor: STYLE.edge,
+  valColor: STYLE.edge,
+  fillValueArea: false,
+  ibColor: STYLE.ib,
+  singlePrintColor: STYLE.faint,
+  nakedColor: STYLE.faint,
+  sessionOpenColor: STYLE.ib,
+  lastPriceColor: STYLE.poc,
+  labelColor: STYLE.faint,
+  showSessionLabel: false,
+  showDayType: false,
+  showOpenType: false,
+  showNakedLevels: true,
+  showInitialBalance: true,
+  showSinglePrints: true,
+} as const;
+
+const VP_STYLE = {
+  barColor: VP_COLORS.va,
+  pocColor: VP_COLORS.poc,
+  vahColor: VP_COLORS.edge,
+  valColor: VP_COLORS.edge,
+  highlightValueArea: true,
+  valueAreaFillColor: VP_COLORS.va,
+  valueAreaFillOpacity: 0.08,
+  valueAreaOpacityDim: 0.35,
+} as const;
 
 const KEY = 'aem_profiles_v1';
 const TICK = 0.05;
@@ -91,7 +126,7 @@ export function mountProfiles(widget: Widget): Profiles {
       });
       if (tpo) tpo.setData(result);
       else {
-        tpo = new MarketProfile(result, { showNakedLevels: true, showInitialBalance: true, showSinglePrints: true });
+        tpo = new MarketProfile(result, TPO_STYLE);
         widget.chart.addPrimitive(tpo);
       }
     } else if (tpo) {
@@ -108,7 +143,7 @@ export function mountProfiles(widget: Widget): Profiles {
       });
       if (vp) vp.setData(result);
       else {
-        vp = new VolumeProfile(result);
+        vp = new VolumeProfile(result, VP_STYLE);
         widget.chart.addPrimitive(vp);
       }
     } else if (vp) {
